@@ -113,7 +113,8 @@ class PersistentWorker(
         output = listOf(
           log.out.toString(),
           cap
-        ).joinToString("\n").trim()
+        ).filterNot { it.contains("[ksp] loaded provider(s): ") }
+        .joinToString("\n").trim()
         exitCode = status.exit
         requestId = id
       }
