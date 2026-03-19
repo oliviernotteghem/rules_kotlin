@@ -88,6 +88,7 @@ def _kotlin_toolchain_impl(ctx):
         experimental_remove_private_classes_in_abi_jars = ctx.attr.experimental_remove_private_classes_in_abi_jars,
         experimental_remove_debug_info_in_abi_jars = ctx.attr.experimental_remove_debug_info_in_abi_jars,
         experimental_strict_kotlin_deps = ctx.attr.experimental_strict_kotlin_deps,
+        experimental_jdeps_exclude_unused = ctx.attr.experimental_jdeps_exclude_unused,
         experimental_report_unused_deps = ctx.attr.experimental_report_unused_deps,
         experimental_reduce_classpath_mode = ctx.attr.experimental_reduce_classpath_mode,
         experimental_build_tools_api = ctx.attr.experimental_build_tools_api,
@@ -181,6 +182,11 @@ _kt_toolchain = rule(
                 "warn",
                 "error",
             ],
+        ),
+        "experimental_jdeps_exclude_unused": attr.bool(
+            doc = """Exclude unused dependencies from jdeps output to reduce file size.
+            This can speed up builds by reducing remote cache download times.""",
+            default = False,
         ),
         "experimental_treat_internal_as_private_in_abi_jars": attr.bool(
             doc = """This applies the following compiler plugin option:
@@ -351,6 +357,7 @@ def define_kt_toolchain(
         experimental_remove_private_classes_in_abi_jars = False,
         experimental_remove_debug_info_in_abi_jars = False,
         experimental_strict_kotlin_deps = None,
+        experimental_jdeps_exclude_unused = False,
         experimental_report_unused_deps = None,
         experimental_reduce_classpath_mode = None,
         experimental_multiplex_workers = None,
@@ -382,6 +389,7 @@ def define_kt_toolchain(
         experimental_remove_debug_info_in_abi_jars = experimental_remove_debug_info_in_abi_jars,
         experimental_multiplex_workers = experimental_multiplex_workers,
         experimental_strict_kotlin_deps = experimental_strict_kotlin_deps,
+        experimental_jdeps_exclude_unused = experimental_jdeps_exclude_unused,
         experimental_report_unused_deps = experimental_report_unused_deps,
         experimental_reduce_classpath_mode = experimental_reduce_classpath_mode,
         experimental_build_tools_api = experimental_build_tools_api,

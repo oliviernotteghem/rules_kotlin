@@ -90,6 +90,8 @@ message CompilationTaskInfo {
     bool build_tools_api = 14;
     // Debug info is stripped in abi.jar generation
     bool remove_debug_info = 15;
+    // Exclude unused dependencies from jdeps output to reduce file size
+    bool jdeps_exclude_unused = 16;
 }
 
 // Nested messages not marked with stable could be refactored.

@@ -34,6 +34,13 @@ class JdepsGenCommandLineProcessor : CommandLineProcessor {
       )
     val STRICT_KOTLIN_DEPS_OPTION: CliOption =
       CliOption("strict_kotlin_deps", "<String>", "Report strict deps violations", required = true)
+    val JDEPS_EXCLUDE_UNUSED_OPTION: CliOption =
+      CliOption(
+        "jdeps_exclude_unused",
+        "<Boolean>",
+        "Exclude unused dependencies from jdeps output to reduce file size",
+        required = false,
+      )
   }
 
   override val pluginId: String
@@ -46,6 +53,7 @@ class JdepsGenCommandLineProcessor : CommandLineProcessor {
         DIRECT_DEPENDENCIES_OPTION,
         FULL_CLASSPATH_OPTION,
         STRICT_KOTLIN_DEPS_OPTION,
+        JDEPS_EXCLUDE_UNUSED_OPTION,
       )
 
   override fun processOption(
@@ -70,6 +78,11 @@ class JdepsGenCommandLineProcessor : CommandLineProcessor {
         configuration.put(
           JdepsGenConfigurationKeys.STRICT_KOTLIN_DEPS,
           value,
+        )
+      JDEPS_EXCLUDE_UNUSED_OPTION ->
+        configuration.put(
+          JdepsGenConfigurationKeys.JDEPS_EXCLUDE_UNUSED,
+          value.toBoolean(),
         )
       else -> throw CliOptionProcessingException("Unknown option: ${option.optionName}")
     }

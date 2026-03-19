@@ -109,17 +109,21 @@ abstract class BaseJdepsGenExtension(
 
     // Build and write out deps.proto
     val jdepsOutput = configuration.getNotNull(JdepsGenConfigurationKeys.OUTPUT_JDEPS)
+    val jdepsExcludeUnused = configuration.get(JdepsGenConfigurationKeys.JDEPS_EXCLUDE_UNUSED) ?: false
 
     val rootBuilder = Deps.Dependencies.newBuilder()
     rootBuilder.success = true
     rootBuilder.ruleLabel = targetLabel
 
-    val unusedDeps = directDeps.subtract(explicitDeps.keys)
-    unusedDeps.forEach { jarPath ->
-      val dependency = Deps.Dependency.newBuilder()
-      dependency.kind = Deps.Dependency.Kind.UNUSED
-      dependency.path = jarPath
-      rootBuilder.addDependency(dependency)
+    // Only include unused deps if exclusion is disabled
+    if (!jdepsExcludeUnused) {
+      val unusedDeps = directDeps.subtract(explicitDeps.keys)
+      unusedDeps.forEach { jarPath ->
+        val dependency = Deps.Dependency.newBuilder()
+        dependency.kind = Deps.Dependency.Kind.UNUSED
+        dependency.path = jarPath
+        rootBuilder.addDependency(dependency)
+      }
     }
 
     explicitDeps.forEach { (jarPath, _) ->

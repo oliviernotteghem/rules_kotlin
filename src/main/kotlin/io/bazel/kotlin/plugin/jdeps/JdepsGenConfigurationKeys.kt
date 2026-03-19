@@ -41,4 +41,14 @@ object JdepsGenConfigurationKeys {
     CompilerConfigurationKey.create(
       JdepsGenCommandLineProcessor.FULL_CLASSPATH_OPTION.description,
     )
+
+  /**
+   * Whether to exclude unused dependencies from jdeps output.
+   * When true, UNUSED deps are not written to the jdeps file, reducing file size
+   * and improving remote cache download times.
+   */
+  val JDEPS_EXCLUDE_UNUSED: CompilerConfigurationKey<Boolean> =
+    CompilerConfigurationKey.create(
+      JdepsGenCommandLineProcessor.JDEPS_EXCLUDE_UNUSED_OPTION.description,
+    )
 }

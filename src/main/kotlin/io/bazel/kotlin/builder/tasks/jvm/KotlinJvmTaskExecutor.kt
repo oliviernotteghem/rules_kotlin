@@ -79,6 +79,7 @@ class KotlinJvmTaskExecutor(
                             flag("full_classpath", it)
                           }
                           flag("strict_kotlin_deps", info.strictKotlinDeps)
+                          flag("jdeps_exclude_unused", info.jdepsExcludeUnused.toString())
                         }
                       }.given(outputs.jar)
                       .notEmpty {

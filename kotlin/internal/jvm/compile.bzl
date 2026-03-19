@@ -575,6 +575,7 @@ def _run_kt_builder_action(
     args.add_all("--javacopts", javac_options_to_flags(javac_options))
     args.add_all("--direct_dependencies", _java_infos_to_compile_jars(compile_deps.deps))
     args.add("--strict_kotlin_deps", toolchains.kt.experimental_strict_kotlin_deps)
+    args.add("--jdeps_exclude_unused", toolchains.kt.experimental_jdeps_exclude_unused)
     args.add_all("--classpath", compile_deps.compile_jars)
     args.add("--reduced_classpath_mode", toolchains.kt.experimental_reduce_classpath_mode)
     args.add("--build_tools_api", toolchains.kt.experimental_build_tools_api)

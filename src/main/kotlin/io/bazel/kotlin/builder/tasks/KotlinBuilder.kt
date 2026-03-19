@@ -81,6 +81,7 @@ class KotlinBuilder(
       BUILD_KOTLIN("--build_kotlin"),
       STRICT_KOTLIN_DEPS("--strict_kotlin_deps"),
       REDUCED_CLASSPATH_MODE("--reduced_classpath_mode"),
+      JDEPS_EXCLUDE_UNUSED("--jdeps_exclude_unused"),
       INSTRUMENT_COVERAGE("--instrument_coverage"),
       BUILD_TOOLS_API("--build_tools_api"),
     }
@@ -157,6 +158,9 @@ class KotlinBuilder(
         argMap.mandatorySingle(KotlinBuilderFlags.LANGUAGE_VERSION)
       strictKotlinDeps = argMap.mandatorySingle(KotlinBuilderFlags.STRICT_KOTLIN_DEPS)
       reducedClasspathMode = argMap.mandatorySingle(KotlinBuilderFlags.REDUCED_CLASSPATH_MODE)
+      argMap.optionalSingle(KotlinBuilderFlags.JDEPS_EXCLUDE_UNUSED)?.let {
+        jdepsExcludeUnused = it == "true"
+      }
       argMap.optionalSingle(KotlinBuilderFlags.ABI_JAR_INTERNAL_AS_PRIVATE)?.let {
         treatInternalAsPrivateInAbiJar = it == "true"
       }
